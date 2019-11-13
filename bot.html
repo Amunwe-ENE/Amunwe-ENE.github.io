@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+		<link type="text/css" rel="stylesheet" href="./style.css"/>
+	</head>
+	<body>
+		<div id="app">
+  			
+			
+
+ 			 <!-- Element to collapse -->
+  			<b-collapse id="collapse-2">
+    				<b-card>
+					<input v-model="input" v-on:keyup.enter="getResponse" type="text">
+  					<p class="request"> {{request}} </p>
+  					<p class="response"> {{serResponse}} </p>
+				</b-card>
+				
+  			</b-collapse>
+			<b-button v-b-toggle="'collapse-2'" class="m-1">Chat</b-button>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+		<script>
+			new Vue({
+				el: '#app',
+				  data: {
+  					input: 'Hello',
+   					request: 'Hi',
+  					serResponse: 'How are you',
+    					bodyData: {
+     						 "queryInput": {
+       						 "text": {
+         						 "languageCode": "en",
+          						 "text": "Hello"
+        							}
+      						}
+   					 },
+    					url: 'https://cors-anywhere.herokuapp.com/https://dialogflow.googleapis.com/v2beta1/projects/unam-oigocg/agent/sessions/n23p:detectIntent'
+ 					 },
+  				methods: {
+  					getResponse(){
+    					this.request = this.input
+      					this.bodyData.queryInput.text.text = this.request
+      					//fetch response
+    					const options = {
+      						method: 'POST',
+        						body: JSON.stringify(this.bodyData),
+        
+        						headers: new Headers({
+        							'Authorization': 'Bearer ya29.c.Kl6wB9Klxj_lst1ZcvWTL8SFcNULWACu4IvySpp_T9-WLRg-ffaLI3PJCnXNCRutMe9-uOtpB8J3YKAnAb71dFBD9PABhaGMOFHdOkjgZ',
+							'Accept': 'application/json',
+          							'Access-Control-Allow-Origin': 'https://dialogflow.googleapis.com/*',
+							'Content-Type': 'application/json'
+        						})
+     					 } 
+					console.log(options)
+     					 return fetch(this.url, options)
+      					.then(res => res.json())
+      					.then(res => console.log(res))
+      					.catch(error => console.error(`Error: ${error}`))
+  					}
+ 				 }
+			});
+		</script>
+	</body>
+</html>
