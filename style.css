@@ -3,7 +3,39 @@ p {
 	margin: 16px;
 	width: 30%;
 }
+.block{
+	display: table;
+	margin: 5%;
+	max-width: 70%;
+	padding: 10px;;
+}
 .response {
-	position: absolute;
-	right: 2px;
+	position: relative;
+	
+}
+.chat-div{
+	display: flex;
+	/* flex-wrap: wrap; */
+	
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 16px;
+}
+.b-card{
+	display: flex;
+	justify-content: space-around;
+	min-width: 79%;
+}
+.chat-box{
+	
+	
+}
+#chat-header{
+	width: 100%;
+}
+.b-border{
+	border: none;
+	border-bottom: 1px solid grey ;
+	min-width: 350px;
+	margin-top: 32px;
 }

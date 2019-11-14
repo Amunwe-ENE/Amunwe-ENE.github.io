@@ -6,29 +6,68 @@
 	</head>
 	<body>
 		<div id="app">
-  			
+				<b-navbar toggleable="lg" type="dark" variant="dark">
+						<b-navbar-brand href="#">Unam ChatBot</b-navbar-brand>
+					
+						<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+					
+						<b-collapse id="nav-collapse" is-nav>
+						  <b-navbar-nav>
+							
+							
+						  </b-navbar-nav>
+					
+						  
+					
+							
+					
+							
+						  </b-navbar-nav>
+						</b-collapse>
+					  </b-navbar>
 			
+			<div class="chat-div">
+				<iframe
+					allow="microphone;"
+					width="350"
+					height="430"
+					src="https://console.dialogflow.com/api-client/demo/embedded/b7a43822-b948-4d24-85f3-49b99e8d30e2">
+				</iframe>
 
+			<div class="chat-box">
  			 <!-- Element to collapse -->
   			<b-collapse id="collapse-2">
-    				<b-card>
-					<input v-model="input" v-on:keyup.enter="getResponse" type="text">
-  					<p class="request"> {{request}} </p>
-  					<p class="response"> {{serResponse}} </p>
+					<h2><b-badge id="chat-header" variant="dark">UNAM VA</b-badge></h2>
+    				<b-card class="b-card">
+						
+							<b-badge  v-for="(chatlog, index) in chatlogs" :key="index" :class="chatlog.className " :variant="chatlog.vary">{{chatlog.text}}</b-badge>
+							
+					<input class="block b-border" v-model="input" v-on:keyup.enter="getResponse" type="text">
+  					
+					  
 				</b-card>
 				
-  			</b-collapse>
-			<b-button v-b-toggle="'collapse-2'" class="m-1">Chat</b-button>
+			  </b-collapse>
+			
+			<b-button v-b-toggle="'collapse-2'" variant="dark" class="m-1">Chat</b-button>
+		</div></div>
+		</div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 		<script>
+		
 			new Vue({
-				el: '#app',
-				  data: {
-  					input: 'Hello',
+				el: '#app',//bind the app to an element with the id 'app'
+				  data: {//
+					user: 08123235534,
+  					input: 'Type something',
    					request: 'Hi',
   					serResponse: 'How are you',
+					chatlogs: [
+						{className: 'request block ', text: 'HI', vary:'primary'},
+						{className: 'response block float-right clearfix', text: 'Hello',vary:'success'}
+					],
     					bodyData: {
      						 "queryInput": {
        						 "text": {
@@ -37,11 +76,12 @@
         							}
       						}
    					 },
-    					url: 'https://cors-anywhere.herokuapp.com/https://dialogflow.googleapis.com/v2beta1/projects/unam-oigocg/agent/sessions/n23p:detectIntent'
+    					url: 'https://cors-anywhere.herokuapp.com/https://dialogflow.googleapis.com/v2beta1/projects/unam-oigocg/agent/sessions/'+this.user+':detectIntent'
  					 },
   				methods: {
   					getResponse(){
     					this.request = this.input
+						this.chatlogs.push({className: 'request block', text: this.request, vary:'primary'})
       					this.bodyData.queryInput.text.text = this.request
       					//fetch response
     					const options = {
@@ -50,7 +90,7 @@
         
         						headers: new Headers({
         							'Authorization': 'Bearer ya29.c.Kl6wB9Klxj_lst1ZcvWTL8SFcNULWACu4IvySpp_T9-WLRg-ffaLI3PJCnXNCRutMe9-uOtpB8J3YKAnAb71dFBD9PABhaGMOFHdOkjgZ',
-							'Accept': 'application/json',
+									'Accept': 'application/json',
           							'Access-Control-Allow-Origin': 'https://dialogflow.googleapis.com/*',
 							'Content-Type': 'application/json'
         						})
